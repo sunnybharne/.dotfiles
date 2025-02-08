@@ -2,11 +2,7 @@
 My dotfiles
 
 ## Installation
-To install the dotfiles, run the following command:
-
-```sh
-./install.sh
-```
+To install the dotfiles, follow the instructions below:
 
 ## Neovim Configuration
 The Neovim configuration files are located in the `nvim` directory. To set up Neovim with these configurations, follow the instructions below:
@@ -19,6 +15,11 @@ The Zsh configuration file is located at `zshrc`. To use this configuration, cop
 
 ```sh
 cp zshrc ~/.zshrc
+```
+
+## Setup command
+```sh
+curl -H 'Cache-Control: no-cache' -sSL "https://raw.githubusercontent.com/sunnybharne/.dotfiles/main/mac-setup/install.sh" | bash
 ```
 
 ## iTerm2 Color Schemes
