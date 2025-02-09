@@ -1,55 +1,53 @@
 # ------------------------------------------
-# 🍺 Ultimate Nerd Developer Brewfile
+# Ultimate Developer Brewfile
 # ------------------------------------------
 
-# 🔹 Essential CLI Tools
-brew "git"                # Version control
-brew "wget"               # File downloader
-brew "curl"               # Transfer data from URLs
-brew "neovim"             # Modern Vim
-brew "tmux"               # Terminal multiplexer
-brew "tree"               # View directory structure
-brew "htop"               # System process monitor
-brew "jq"                 # JSON processing
-brew "fd"                 # Fast alternative to `find`
-brew "ripgrep"            # Fast alternative to `grep`
-brew "bat"                # Fancy `cat` with syntax highlighting
-brew "fzf"                # Fuzzy finder
-brew "zsh"                # Z shell
-brew "zsh-autosuggestions" # Command suggestions
-brew "zsh-syntax-highlighting" # Better Zsh highlighting
-brew "thefuck"            # Fix last command errors with `fuck`
-brew "tldr"               # Simplified man pages
-brew "gh"                 # GitHub CLI
-brew "mas"                # Mac App Store CLI
-brew "asciiquarium"       # ASCII fish tank
-brew "neofetch"           # System info in ASCII
-brew "lolcat"             # Rainbow text
+# Essential CLI Tools
+brew "git"                # Version control system
+brew "wget"               # Utility to download files from the web
+brew "curl"               # Command-line tool for transferring data
+brew "neovim"             # Modern, fast, and extensible Vim alternative
+brew "tmux"               # Terminal multiplexer for managing multiple sessions
+brew "tree"               # Display directory structure in a tree format
+brew "htop"               # Interactive system process viewer
+brew "jq"                 # Command-line JSON processor
+brew "fd"                 # Fast and user-friendly alternative to `find`
+brew "ripgrep"            # Fast and recursive grep alternative
+brew "bat"                # Enhanced `cat` with syntax highlighting
+brew "fzf"                # Fuzzy file finder for command-line usage
+brew "zsh"                # Z shell for improved shell features
+brew "zsh-autosuggestions" # Suggests commands based on history
+brew "zsh-syntax-highlighting" # Improves command visibility in Zsh
+brew "thefuck"            # Corrects previous command mistakes
+brew "tldr"               # Concise community-driven man pages
+brew "gh"                 # GitHub command-line interface
+brew "mas"                # Mac App Store command-line interface
+brew "asciiquarium"       # ASCII aquarium display
+brew "neofetch"           # System information in ASCII format
+brew "lolcat"             # Displays colored text in terminal
 
-# 🔹 Install Xcode from the Mac App Store
+# Install Xcode from the Mac App Store
 mas "Xcode", id: 497799835
 
-# 🔹 Programming Languages & Runtimes
-brew "python"            # Python 3
-brew "node"              # Node.js + npm
-brew "nvm"               # Node Version Manager
-brew "openjdk"           # Java JDK
-brew "pyenv"             # Python version manager
+# Programming Languages & Runtimes
+brew "python"            # Python 3 programming language
+brew "node"              # Node.js runtime with npm
+brew "nvm"               # Node Version Manager for managing Node.js versions
+brew "openjdk"           # Java Development Kit (JDK)
+brew "pyenv"             # Python version management tool
 
-# 🔹 DevOps & Cloud Tools
-brew "awscli"            # AWS CLI
-brew "azure-cli"         # Azure CLI
-brew "terraform"         # Infrastructure as Code
+# DevOps & Cloud Tools
+brew "awscli"            # AWS Command Line Interface
+brew "azure-cli"         # Azure Command Line Interface
+brew "terraform"         # Infrastructure as Code tool
 
-# 🔹 Frontend Development
+# Frontend Development Tools
 brew "yarn"              # JavaScript package manager
-brew "eslint"            # JavaScript linting
-brew "prettier"          # Code formatter
+brew "eslint"            # JavaScript linter to ensure code quality
+brew "prettier"          # Code formatter for JavaScript and other languages
 
-# 🔹 Containers & Virtualization
-brew "docker"   
+# Containers & Virtualization
+brew "docker"            # Containerization platform
 
-# 🔹 Fun & Nerdy Tools
-brew "powerlevel10k"     # Zsh theme
-
-# 🎉 Done!
+# Development & Productivity Enhancements
+brew "powerlevel10k"     # Fast and customizable Zsh theme
