@@ -38,6 +38,12 @@ fi
 ln -sf "$DOTFILES_DIR/tmux/.tmux.conf" "$HOME/.tmux.conf"
 echo "Linked .tmux.conf"
 
+# Symlink iTerm2 Preferences
+if [ -d "$DOTFILES_DIR/iterm" ]; then
+    ln -sf "$DOTFILES_DIR/iterm/com.googlecode.iterm2.plist" "$HOME/Library/Preferences/com.googlecode.iterm2.plist"
+    echo "Linked iTerm2 preferences"
+fi
+
 # Check if Homebrew is installed
 if command -v brew &>/dev/null; then
     echo "Homebrew found. Installing dependencies from Brewfile..."
