@@ -41,7 +41,12 @@ echo "✅ Linked .tmux.conf"
 # Check if Homebrew is installed
 if command -v brew &>/dev/null; then
     echo "🍺 Homebrew found! Installing dependencies from Brewfile..."
-    brew bundle --file="$HOME/Brewfile"
+    
+    # Handle Homebrew installation failures
+    if ! brew bundle --file="$HOME/Brewfile"; then
+        echo "❌ Homebrew Bundle failed! Skipping problematic formulas..."
+    fi
+    
     echo "✅ Homebrew dependencies installed."
 else
     echo "⚠️ Homebrew not found! Skipping Brewfile installation."
@@ -58,6 +63,15 @@ fi
 if pgrep tmux > /dev/null; then
     tmux source-file ~/.tmux.conf
     echo "🔄 Reloaded .tmux.conf"
+fi
+
+# Check if the current shell is Zsh
+if [ "$SHELL" != "/bin/zsh" ]; then
+    echo "⚠️ You're using Bash. To apply all settings, switch to Zsh: run 'zsh' or 'chsh -s $(which zsh)'"
+else
+    echo "🔄 Sourcing .zshrc in Zsh..."
+    zsh -c "source $HOME/.zshrc"
+    echo "✅ .zshrc reloaded in Zsh!"
 fi
 
 echo "🚀 Dotfiles setup complete!"

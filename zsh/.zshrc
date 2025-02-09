@@ -1,8 +1,11 @@
 # Path to your Oh My Zsh installation
 export ZSH="$HOME/.oh-my-zsh"
 
-# Optimized Zsh theme (better for nerds)
-ZSH_THEME="agnoster"  # Modern, clean, and minimal
+# Use the Robby Russell Theme
+ZSH_THEME="robbyrussell"
+
+# Load Oh My Zsh
+source $ZSH/oh-my-zsh.sh
 
 # Plugins
 plugins=(
@@ -17,11 +20,13 @@ plugins=(
   node
 )
 
-# Autosuggestions and syntax highlighting
-export ZSH_AUTOSUGGEST_HIGHLIGHT_STYLE='fg=#ffffff'
-source $ZSH/oh-my-zsh.sh
+# Autosuggestions and syntax highlighting (improved visibility)
+export ZSH_AUTOSUGGEST_HIGHLIGHT_STYLE='fg=#ffffff,bold'
+export ZSH_HIGHLIGHT_HIGHLIGHTERS=(main brackets cursor)
+export ZSH_HIGHLIGHT_STYLES[comment]='fg=cyan'
+export ZSH_HIGHLIGHT_STYLES[command]='fg=white,bold'
 
-# Improve Zsh startup speed
+# Optimize Zsh startup speed
 autoload -U compinit && compinit
 
 # Terraform autocomplete
