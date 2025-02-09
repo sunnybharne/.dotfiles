@@ -1,7 +1,7 @@
 # Dotfiles Setup
 
 ## Overview
-This project automates the setup of development environment configurations using a dotfiles repository. The script creates symbolic links for configuration files, installs necessary dependencies via Homebrew, and ensures smooth integration with Zsh, Tmux, and Neovim.
+This project automates the setup of development environment configurations using a dotfiles repository. The script creates symbolic links for configuration files, installs necessary dependencies via Homebrew, and ensures smooth integration with **Zsh, Tmux, Neovim, and iTerm2**.
 
 ## Features
 - Symlinks dotfiles to the home directory
@@ -10,6 +10,7 @@ This project automates the setup of development environment configurations using
 - Ensures a clean and reproducible development environment
 - Automatically installs Tmux Plugin Manager (TPM)
 - Supports automatic sourcing of `.zshrc`
+- **Syncs iTerm2 preferences for consistent terminal settings**
 
 ## Installation
 
@@ -18,6 +19,7 @@ Ensure that you have the following installed before running the script:
 - **Git** (for cloning dotfiles)
 - **Homebrew** (for package management)
 - **Zsh** (default shell, recommended for best experience)
+- **iTerm2** (optional, but recommended for best terminal experience)
 
 ### Clone the Repository
 ```sh
@@ -48,6 +50,8 @@ brew bundle --file=~/Brewfile
 │   ├── init.lua             # Neovim configuration
 │── tmux/
 │   ├── .tmux.conf           # Tmux configuration
+│── iterm/
+│   ├── com.googlecode.iterm2.plist  # iTerm2 preferences
 ```
 
 ## Configuration Details
@@ -63,6 +67,11 @@ brew bundle --file=~/Brewfile
 - Links `.tmux.conf`
 - Installs TPM (Tmux Plugin Manager) if not present
 - Reloads Tmux configuration if Tmux is running
+
+### **iTerm2 Configuration**
+- Stores iTerm2 preferences in `~/.dotfiles/iterm/com.googlecode.iterm2.plist`
+- Automatically symlinks the preferences to `~/Library/Preferences/`
+- Ensures consistent terminal settings across machines
 
 ## Troubleshooting
 ### **Homebrew is not installed**
@@ -83,6 +92,16 @@ Ensure Tmux is running and reload manually:
 tmux source-file ~/.tmux.conf
 ```
 
+### **iTerm2 preferences are not applied**
+If iTerm2 doesn't load your settings:
+1. Open **iTerm2** → `Preferences` (`Cmd + ,`)
+2. Go to **General** → Check ✅ `Load preferences from a custom folder`
+3. Set the path to:
+   ```
+   ~/.dotfiles/iterm
+   ```
+4. Restart iTerm2.
+
 ## Contributing
 Feel free to fork the repository and submit pull requests for improvements.
 
@@ -90,4 +109,4 @@ Feel free to fork the repository and submit pull requests for improvements.
 This project is open-source and available under the MIT License.
 
 ---
-For any issues, feel free to reach out or open an issue in the repository.
+For any issues, feel free to reach out or open an issue in the repository. 🚀
