@@ -52,4 +52,3 @@ brew "docker"            # Containerization platform
 
 # Development & Productivity Enhancements
 brew "powerlevel10k"     # Fast and customizable Zsh theme
-

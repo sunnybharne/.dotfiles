@@ -74,5 +74,11 @@ else
     echo ".zshrc reloaded in Zsh."
 fi
 
-echo "Dotfiles setup complete."
+# Install Oh My Zsh if not installed
+if [ ! -d "$HOME/.oh-my-zsh" ]; then
+    echo "Installing Oh My Zsh..."
+    sh -c "$(curl -fsSL https://raw.githubusercontent.com/ohmyzsh/ohmyzsh/master/tools/install.sh)"
+    echo "Oh My Zsh installed."
+fi
 
+echo "Dotfiles setup complete."
