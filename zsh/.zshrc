@@ -20,11 +20,19 @@ plugins=(
   node
 )
 
+# Ensure zsh-syntax-highlighting is sourced before setting styles
+if [[ -f /opt/homebrew/share/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh ]]; then
+  source /opt/homebrew/share/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh
+fi
+
 # Autosuggestions and syntax highlighting (improved visibility)
 export ZSH_AUTOSUGGEST_HIGHLIGHT_STYLE='fg=#ffffff,bold'
 export ZSH_HIGHLIGHT_HIGHLIGHTERS=(main brackets cursor)
-export ZSH_HIGHLIGHT_STYLES[comment]='fg=cyan'
-export ZSH_HIGHLIGHT_STYLES[command]='fg=white,bold'
+
+# Declare associative array for syntax highlighting styles
+typeset -A ZSH_HIGHLIGHT_STYLES
+ZSH_HIGHLIGHT_STYLES[comment]='fg=cyan'
+ZSH_HIGHLIGHT_STYLES[command]='fg=white,bold'
 
 # Optimize Zsh startup speed
 autoload -U compinit && compinit
