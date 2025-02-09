@@ -4,6 +4,7 @@
 
 # Essential CLI Tools
 brew "git"                # Version control system
+brew "lazygit"            # Simple terminal UI for git commands
 brew "wget"               # Utility to download files from the web
 brew "curl"               # Command-line tool for transferring data
 brew "neovim"             # Modern, fast, and extensible Vim alternative
@@ -51,3 +52,4 @@ brew "docker"            # Containerization platform
 
 # Development & Productivity Enhancements
 brew "powerlevel10k"     # Fast and customizable Zsh theme
+
