@@ -2,12 +2,6 @@
 # 🍺 Ultimate Nerd Developer Brewfile
 # ------------------------------------------
 
-# 🏛️ Ensure Homebrew is ready
-tap "homebrew/bundle"
-tap "homebrew/cask"
-tap "homebrew/cask-versions"
-tap "homebrew/core"
-
 # 🔹 Essential CLI Tools
 brew "git"                # Version control
 brew "wget"               # File downloader
