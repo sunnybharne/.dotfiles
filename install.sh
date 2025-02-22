@@ -1,7 +1,7 @@
 #!/bin/bash
 
 # Create code dir
-mkdir -p "$HOME/code"
+mkdir -p ~/code && cd ~/code
 
 # Clone the dotfiles repo
-Git clone https://github.com/sunnybharne/dotfiles.git ~/code/dotfiles
+git clone https://github.com/sunnybharne/dotfiles.git
