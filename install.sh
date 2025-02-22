@@ -1,29 +1,114 @@
 #!/bin/sh
 
-# Check if the 'code' directory exists, and create it if it doesn't
+# =============================
+# IMPORTANT VARIABLES
+# =============================
+
+# Base directory for code repositories
 CODE_DIR="$HOME/code"
-if [ ! -d "$CODE_DIR" ]; then
-    echo "Directory $CODE_DIR does not exist. Creating it..."
-    mkdir -p "$CODE_DIR"
+
+# Dotfiles repository directory (must be cloned here beforehand)
+DOTFILES_DIR="$CODE_DIR/dotfiles"
+
+# SSH URL for your separate Neovim configuration repository
+NVIM_REPO_URL="https://github.com/sunnybharne/nvim.git" 
+
+# Directory where the Neovim repo will be cloned
+NVIM_CLONE_DIR="$CODE_DIR/nvim"
+
+# Neovim configuration destination directory
+CONFIG_DIR="$HOME/.config"
+NVIM_DEST="$CONFIG_DIR/nvim"
+
+# =============================
+# FUNCTION DEFINITIONS
+# =============================
+
+# Function to install required packages on Arch Linux
+install_packages() {
+    if [ -f /etc/arch-release ]; then
+        echo "Arch Linux detected. Installing git and zsh..."
+        sudo pacman -S --noconfirm git zsh lazygit
+    else
+        echo "This script is intended for Arch Linux. Exiting..."
+        exit 1
+    fi
+}
+
+# Function to ensure a directory exists; create it if it doesn't
+ensure_dir() {
+    DIR="$1"
+    if [ ! -d "$DIR" ]; then
+        echo "Directory $DIR does not exist. Creating it..."
+        mkdir -p "$DIR"
+    else
+        echo "Directory $DIR already exists."
+    fi
+}
+
+# Function to remove a file or directory if it exists
+remove_file() {
+    FILE="$1"
+    if [ -e "$FILE" ]; then
+        echo "$FILE exists. Removing it..."
+        rm -rf "$FILE"
+        if [ $? -eq 0 ]; then
+            echo "Successfully removed $FILE."
+        else
+            echo "Failed to remove $FILE. Please check permissions."
+            exit 1
+        fi
+    else
+        echo "$FILE does not exist."
+    fi
+}
+
+# Function to create a symlink from source to destination
+create_symlink() {
+    SRC="$1"
+    DEST="$2"
+    echo "Creating symlink for $(basename "$DEST")..."
+    ln -s "$SRC" "$DEST"
+}
+
+# =============================
+# SCRIPT EXECUTION
+# =============================
+
+# Install required packages (git and zsh)
+install_packages
+
+# Ensure the CODE_DIR exists
+ensure_dir "$CODE_DIR"
+
+# Remove existing .gitconfig and .zshrc from home directory
+remove_file "$HOME/.gitconfig"
+remove_file "$HOME/.zshrc"
+
+# Verify that the dotfiles repository exists
+if [ -d "$DOTFILES_DIR" ]; then
+    echo "Dotfiles repository found at $DOTFILES_DIR."
 else
-    echo "Directory $CODE_DIR already exists."
+    echo "Dotfiles repository not found at $DOTFILES_DIR. Exiting..."
+    exit 1
 fi
 
-# Check if the .gitconfig symlink exists, and remove it if it does
-GITCONFIG_SYMLINK="$HOME/.gitconfig"
-if [ -L "$GITCONFIG_SYMLINK" ]; then
-    echo "Symlink $GITCONFIG_SYMLINK exists. Removing it..."
-    rm "$GITCONFIG_SYMLINK"
-else
-    echo "Symlink $GITCONFIG_SYMLINK does not exist."
-fi
+# Create symlinks for .gitconfig and .zshrc from the dotfiles repository
+create_symlink "$DOTFILES_DIR/.gitconfig" "$HOME/.gitconfig"
+create_symlink "$DOTFILES_DIR/.zshrc" "$HOME/.zshrc"
 
-# Check if the .zshrc symlink exists, and remove it if it does
-ZSHRC_SYMLINK="$HOME/.zshrc"
-if [ -L "$ZSHRC_SYMLINK" ]; then
-    echo "Symlink $ZSHRC_SYMLINK exists. Removing it..."
-    rm "$ZSHRC_SYMLINK"
-else
-    echo "Symlink $ZSHRC_SYMLINK does not exist."
-fi
+# Remove any existing Neovim clone (directory or symlink) in the code directory
+remove_file "$NVIM_CLONE_DIR"
 
+# Clone the Neovim repository via SSH into the code directory
+echo "Cloning Neovim repository from $NVIM_REPO_URL into $NVIM_CLONE_DIR..."
+git clone "$NVIM_REPO_URL" "$NVIM_CLONE_DIR" || { echo "Failed to clone Neovim repo. Exiting..."; exit 1; }
+
+# Ensure the .config directory exists
+ensure_dir "$CONFIG_DIR"
+
+# Remove any existing Neovim configuration directory in .config and create a new symlink
+remove_file "$NVIM_DEST"
+create_symlink "$NVIM_CLONE_DIR" "$NVIM_DEST"
+
+echo "Setup complete."

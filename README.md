@@ -1,10 +1,5 @@
 # Dotfiles Setup
 
-## Configure with below command 
-```bash
-curl -fsSL https://raw.githubusercontent.com/sunnybharne/.dotfiles/main/install.sh | bash
-```
-
 ## Overview
 This project automates the setup of development environment configurations using a dotfiles repository. The script creates symbolic links for configuration files, installs necessary dependencies via Homebrew, and ensures smooth integration with **Zsh, Tmux, Neovim, and iTerm2**.
 
@@ -19,22 +14,21 @@ This project automates the setup of development environment configurations using
 
 ## Installation
 
+## Use this on fresh arch linux
+```bash
+curl -fsSL https://raw.githubusercontent.com/sunnybharne/.dotfiles/main/install.sh | bash
+```
+### Clone the Repository if you want the entire dotfiles
+```sh
+git clone https://github.com/sunnybharne/dotfiles.git ~/.dotfiles
+```
+
 ### Prerequisites
 Ensure that you have the following installed before running the script:
 - **Git** (for cloning dotfiles)
 - **Homebrew** (for package management)
 - **Zsh** (default shell, recommended for best experience)
 - **iTerm2** (optional, but recommended for best terminal experience)
-
-### Clone the Repository
-```sh
-git clone https://github.com/sunnybharne/dotfiles.git ~/.dotfiles
-```
-
-### Run the Setup Script
-```sh
-bash ~/.dotfiles/install.sh
-```
 
 ## Homebrew Dependencies
 The script installs various CLI tools and development utilities using a `Brewfile`. If Homebrew is installed, dependencies will be installed automatically.
