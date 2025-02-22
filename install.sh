@@ -1,7 +1,8 @@
 #!/bin/sh
 
 # =============================
-# IMPORTANT VARIABLES =============================
+# IMPORTANT VARIABLES 
+# =============================
 
 # Base directory for code repositories
 CODE_DIR="$HOME/code"
@@ -9,11 +10,21 @@ CODE_DIR="$HOME/code"
 # Dotfiles repository directory (must be cloned here beforehand)
 DOTFILES_DIR="$CODE_DIR/dotfiles"
 
-# SSH URL for your separate Neovim configuration repository
+# repositories
 NVIM_REPO_URL="https://github.com/sunnybharne/nvim.git" 
-
-# Directory where the Neovim repo will be cloned
 NVIM_CLONE_DIR="$CODE_DIR/nvim"
+
+DWM_REPO_URL="https://github.com/sunnybharne/dwm.git"
+DWM_CLONE_DIR="$CODE_DIR/dwm"
+
+ST_REPO_URL="https://github.com/sunnybharne/st.git"
+ST_CLONE_DIR="$CODE_DIR/st"
+
+DMENU_REPO_URL="https://github.com/sunnybharne/dmenu.git"
+DMENU_CLONE_DIR="$CODE_DIR/dmenu"
+
+DWMBLOCKS_REPO_URL="https://github.com/sunnybharne/dwmblocks.git"
+DWMBLOCKS_CLONE_DIR="$CODE_DIR/dwmblocks"
 
 # Neovim configuration destination directory
 CONFIG_DIR="$HOME/.config"
@@ -27,7 +38,14 @@ NVIM_DEST="$CONFIG_DIR/nvim"
 install_packages() {
     if [ -f /etc/arch-release ]; then
         echo "Arch Linux detected. Installing git and zsh..."
-        sudo pacman -S --noconfirm git zsh lazygit make oh-my-zsh
+        sudo pacman -Syu
+        sudo pacman -S --noconfirm git
+        sudo pacman -S --noconfirm zsh
+        sudo pacman -S --noconfirm lazygit
+        sudo pacman -S --noconfirm make
+        sudo pacman -S --noconfirm oh-my-zsh
+        sudo pacman -S --noconfirm tmux
+        sudo pacman -S --noconfirm fzf
     else
         echo "This script is intended for Arch Linux. Exiting..."
         exit 1
@@ -108,6 +126,24 @@ configure_oh_my_zsh() {
     fi
 }
 
+# Clone and build a suckless repository
+clone_and_build() {
+    REPO_URL="$1"
+    DEST_DIR="$2"
+    
+    # Remove existing directory if it exists
+    remove_file "$DEST_DIR"
+
+    # Clone the repository
+    echo "Cloning $REPO_URL into $DEST_DIR..."
+    git clone "$REPO_URL" "$DEST_DIR" || { echo "Failed to clone $REPO_URL. Exiting..."; exit 1; }
+
+    # Compile and install
+    echo "Building and installing $(basename "$DEST_DIR")..."
+    cd "$DEST_DIR" || exit 1
+    sudo make clean install
+}
+
 # =============================
 # SCRIPT EXECUTION
 # =============================
@@ -142,6 +178,7 @@ fi
 # Create symlinks for .gitconfig and .zshrc from the dotfiles repository
 create_symlink "$DOTFILES_DIR/.gitconfig" "$HOME/.gitconfig"
 create_symlink "$DOTFILES_DIR/.zshrc" "$HOME/.zshrc"
+create_symlink "$DOTFILES_DIR/.tmux.conf" "$HOME/.tmux.conf"
 
 # Remove any existing Neovim clone (directory or symlink) in the code directory
 remove_file "$NVIM_CLONE_DIR"
@@ -157,6 +194,14 @@ ensure_dir "$CONFIG_DIR"
 remove_file "$NVIM_DEST"
 create_symlink "$NVIM_CLONE_DIR" "$NVIM_DEST"
 
+# -----------------------------
+# Suckless Programs Installation
+# -----------------------------
+
+clone_and_build "$DWM_REPO_URL" "$DWM_CLONE_DIR"
+clone_and_build "$ST_REPO_URL" "$ST_CLONE_DIR"
+clone_and_build "$DMENU_REPO_URL" "$DMENU_CLONE_DIR"
+clone_and_build "$DWMBLOCKS_REPO_URL" "$DWMBLOCKS_CLONE_DIR"
+
 echo "Setup complete. Restart your terminal or run 'exec zsh' to apply changes."
 exec zsh
-

@@ -4,26 +4,14 @@ export ZSH="$HOME/.oh-my-zsh"
 # Use the Robby Russell Theme
 ZSH_THEME="robbyrussell"
 
-# Load Oh My Zsh
-source $ZSH/oh-my-zsh.sh
-
 # Plugins
 plugins=(
   git
-  zsh-autosuggestions
-  zsh-syntax-highlighting
   zsh-interactive-cd
-  fzf
   docker
-  tmux
   terraform
   node
 )
-
-# Ensure zsh-syntax-highlighting is sourced before setting styles
-if [[ -f /opt/homebrew/share/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh ]]; then
-  source /opt/homebrew/share/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh
-fi
 
 # Autosuggestions and syntax highlighting (improved visibility)
 export ZSH_AUTOSUGGEST_HIGHLIGHT_STYLE='fg=#ffffff,bold'
@@ -69,7 +57,12 @@ export PATH="$(echo $PATH | awk -v RS=: -v ORS=: '!seen[$0]++')"
 export EDITOR=nvim
 export VISUAL=nvim
 
-# Tmux auto-start
-if command -v tmux &> /dev/null && [ -z "$TMUX" ]; then
-  tmux attach || tmux new -s main
-fi
+# # Tmux auto-start
+# if command -v tmux &> /dev/null && [ -z "$TMUX" ]; then
+#   tmux attach || tmux new -s main
+# fi
+
+# Load Oh My Zsh
+source /usr/share/zsh/plugins/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh
+source /usr/share/zsh/plugins/zsh-autosuggestions/zsh-autosuggestions.zsh
+source $ZSH/oh-my-zsh.sh
