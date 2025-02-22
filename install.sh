@@ -1,8 +1,7 @@
 #!/bin/sh
 
 # =============================
-# IMPORTANT VARIABLES
-# =============================
+# IMPORTANT VARIABLES =============================
 
 # Base directory for code repositories
 CODE_DIR="$HOME/code"
@@ -99,7 +98,7 @@ configure_oh_my_zsh() {
         echo "Oh-My-Zsh is already installed."
     else
         echo "Installing Oh-My-Zsh using the official script..."
-        sh -c "$(curl -fsSL https://raw.githubusercontent.com/ohmyzsh/ohmyzsh/master/tools/install.sh)"
+        RUNZSH=no sh -c "$(curl -fsSL https://raw.githubusercontent.com/ohmyzsh/ohmyzsh/master/tools/install.sh)"
     fi
 
     # Ensure .zshrc sources the correct path
@@ -158,6 +157,6 @@ ensure_dir "$CONFIG_DIR"
 remove_file "$NVIM_DEST"
 create_symlink "$NVIM_CLONE_DIR" "$NVIM_DEST"
 
-source ~/.zshrc
+echo "Setup complete. Restart your terminal or run 'exec zsh' to apply changes."
+exec zsh
 
-echo "Setup complete."
