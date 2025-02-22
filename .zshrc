@@ -65,16 +65,6 @@ export PATH="/opt/homebrew/bin:$PATH"
 # Fix PATH duplication issue
 export PATH="$(echo $PATH | awk -v RS=: -v ORS=: '!seen[$0]++')"
 
-# -----------------------------
-# Oh My Posh Prompt Configuration
-# -----------------------------
-if command -v oh-my-posh > /dev/null 2>&1; then
-    # Replace 'your-theme.omp.json' with your actual theme file path
-    eval "$(oh-my-posh init zsh --config $HOME/.poshthemes/your-theme.omp.json)"
-else
-    echo "oh-my-posh is not installed."
-fi
-
 # Default editor
 export EDITOR=nvim
 export VISUAL=nvim

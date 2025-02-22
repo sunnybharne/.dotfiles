@@ -28,7 +28,7 @@ NVIM_DEST="$CONFIG_DIR/nvim"
 install_packages() {
     if [ -f /etc/arch-release ]; then
         echo "Arch Linux detected. Installing git and zsh..."
-        sudo pacman -S --noconfirm git zsh lazygit make
+        sudo pacman -S --noconfirm git zsh lazygit make oh-my-zsh
     else
         echo "This script is intended for Arch Linux. Exiting..."
         exit 1
@@ -85,22 +85,28 @@ install_yay() {
     fi
 }
 
-# Install oh-my-posh using yay if it's not already installed
-install_ohmyposh() {
-    if ! command -v oh-my-posh > /dev/null 2>&1; then
-        echo "Installing oh-my-posh via yay..."
-        yay -S --noconfirm oh-my-posh-bin
-    else
-        echo "oh-my-posh is already installed."
-    fi
-}
-
 # Install Zsh-related packages (syntax highlighting & autosuggestions)
 install_zsh_packages() {
     echo "Installing zsh-syntax-highlighting via pacman..."
     sudo pacman -S --noconfirm zsh-syntax-highlighting
     echo "Installing zsh-autosuggestions via yay..."
     yay -S --noconfirm zsh-autosuggestions
+}
+
+# Install oh my zsh
+configure_oh_my_zsh() {
+    if [ -d "$HOME/.oh-my-zsh" ]; then
+        echo "Oh-My-Zsh is already installed."
+    else
+        echo "Installing Oh-My-Zsh using the official script..."
+        sh -c "$(curl -fsSL https://raw.githubusercontent.com/ohmyzsh/ohmyzsh/master/tools/install.sh)"
+    fi
+
+    # Ensure .zshrc sources the correct path
+    if ! grep -q "source /usr/share/oh-my-zsh/oh-my-zsh.sh" "$HOME/.zshrc"; then
+        echo "Updating .zshrc to correctly source oh-my-zsh..."
+        sed -i 's|source $HOME/.oh-my-zsh/oh-my-zsh.sh|source /usr/share/oh-my-zsh/oh-my-zsh.sh|' "$HOME/.zshrc"
+    fi
 }
 
 # =============================
@@ -113,8 +119,8 @@ install_packages
 # Install yay (AUR helper) if needed
 install_yay
 
-# Install oh-my-posh
-install_ohmyposh
+# Install oh my zsh
+configure_oh_my_zsh
 
 # Install zsh config
 install_zsh_packages
@@ -151,5 +157,7 @@ ensure_dir "$CONFIG_DIR"
 # Remove any existing Neovim configuration directory in .config and create a new symlink
 remove_file "$NVIM_DEST"
 create_symlink "$NVIM_CLONE_DIR" "$NVIM_DEST"
+
+source ~/.zshrc
 
 echo "Setup complete."
