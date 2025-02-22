@@ -10,7 +10,7 @@ rm -rf dotfiles
 git clone https://github.com/sunnybharne/dotfiles.git
 
 # Remove .files from home
-rm -rf ~/.gitconfig
+rm ~/.gitconfig
 
 # create links to the dot files
 ln -s .gitconfig ~/.gitconfig
