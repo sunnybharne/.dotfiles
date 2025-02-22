@@ -1,5 +1,10 @@
 # Dotfiles Setup
 
+## Configure with below command 
+```bash
+curl -fsSL https://raw.githubusercontent.com/sunnybharne/.dotfiles/main/install.sh | bash
+```
+
 ## Overview
 This project automates the setup of development environment configurations using a dotfiles repository. The script creates symbolic links for configuration files, installs necessary dependencies via Homebrew, and ensures smooth integration with **Zsh, Tmux, Neovim, and iTerm2**.
 
