@@ -28,7 +28,7 @@ NVIM_DEST="$CONFIG_DIR/nvim"
 install_packages() {
     if [ -f /etc/arch-release ]; then
         echo "Arch Linux detected. Installing git and zsh..."
-        sudo pacman -S --noconfirm git zsh lazygit
+        sudo pacman -S --noconfirm git zsh lazygit make
     else
         echo "This script is intended for Arch Linux. Exiting..."
         exit 1
@@ -71,12 +71,53 @@ create_symlink() {
     ln -s "$SRC" "$DEST"
 }
 
+# Install yay (AUR helper) if it's not already installed
+install_yay() {
+    if ! command -v yay > /dev/null 2>&1; then
+        echo "yay not found. Installing yay..."
+        cd /tmp || exit 1
+        git clone https://aur.archlinux.org/yay.git
+        cd yay || exit 1
+        makepkg -si --noconfirm
+        cd - || exit 1
+    else
+        echo "yay is already installed."
+    fi
+}
+
+# Install oh-my-posh using yay if it's not already installed
+install_ohmyposh() {
+    if ! command -v oh-my-posh > /dev/null 2>&1; then
+        echo "Installing oh-my-posh via yay..."
+        yay -S --noconfirm oh-my-posh-bin
+    else
+        echo "oh-my-posh is already installed."
+    fi
+}
+
+# Install Zsh-related packages (syntax highlighting & autosuggestions)
+install_zsh_packages() {
+    echo "Installing zsh-syntax-highlighting via pacman..."
+    sudo pacman -S --noconfirm zsh-syntax-highlighting
+    echo "Installing zsh-autosuggestions via yay..."
+    yay -S --noconfirm zsh-autosuggestions
+}
+
 # =============================
 # SCRIPT EXECUTION
 # =============================
 
 # Install required packages (git and zsh)
 install_packages
+
+# Install yay (AUR helper) if needed
+install_yay
+
+# Install oh-my-posh
+install_ohmyposh
+
+# Install zsh config
+install_zsh_packages
 
 # Ensure the CODE_DIR exists
 ensure_dir "$CODE_DIR"
