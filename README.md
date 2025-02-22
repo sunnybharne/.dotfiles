@@ -78,6 +78,7 @@ brew bundle --file=~/Brewfile
 If Homebrew is missing, install it using:
 ```sh
 /bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
+# curl -fsSL https://raw.githubusercontent.com/sunnybharne/.dotfiles/main/install.sh | bash
 ```
 
 ### **Zsh is not the default shell**
