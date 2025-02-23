@@ -72,6 +72,7 @@ install_yay_packages() {
     yay -S --noconfirm zsh-autosuggestions
     yay -S --noconfirm ttf-meslo-nerd-font
     yay -S --noconfirm nerd-fonts-fira-code
+    yay -S --noconfirm ttf-ubuntu-mono-nerd
 }
 
 # Function to ensure a directory exists; create it if it doesn't
@@ -109,7 +110,6 @@ create_symlink() {
     echo "Creating symlink for $(basename "$DEST")..."
     ln -s "$SRC" "$DEST"
 }
-
 
 # Install oh my zsh
 configure_oh_my_zsh() {
