@@ -46,6 +46,7 @@ install_packages() {
         sudo pacman -S --noconfirm fzf
         sudo pacman -S --noconfirm ttf-nerd-fonts-symbols
         sudo pacman -S --noconfirm zsh-syntax-highlighting
+        sudo pacman -S --noconfirm feh
     else
         echo "This script is intended for Arch Linux. Exiting..."
         exit 1
@@ -73,6 +74,7 @@ install_yay_packages() {
     yay -S --noconfirm ttf-meslo-nerd-font
     yay -S --noconfirm nerd-fonts-fira-code
     yay -S --noconfirm ttf-ubuntu-mono-nerd
+    yay -S --noconfirm python-pywal
 }
 
 # Function to ensure a directory exists; create it if it doesn't
