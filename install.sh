@@ -4,11 +4,12 @@
 # IMPORTANT VARIABLES 
 # =============================
 
-# Base directory for code repositories
+# Directories
 CODE_DIR="$HOME/code"
-
-# Dotfiles repository directory (must be cloned here beforehand)
 DOTFILES_DIR="$CODE_DIR/dotfiles"
+
+CONFIG_DIR="$HOME/.config"
+NVIM_DEST="$CONFIG_DIR/nvim"
 
 # repositories
 NVIM_REPO_URL="https://github.com/sunnybharne/nvim.git" 
@@ -23,12 +24,8 @@ ST_CLONE_DIR="$CODE_DIR/st"
 DMENU_REPO_URL="https://github.com/sunnybharne/dmenu.git"
 DMENU_CLONE_DIR="$CODE_DIR/dmenu"
 
-DWMBLOCKS_REPO_URL="https://github.com/sunnybharne/dwmblocks.git"
+DWMBLOCKS_REPO_URL="https://github.com/sunnybharne/dwm-blocks.git"
 DWMBLOCKS_CLONE_DIR="$CODE_DIR/dwmblocks"
-
-# Neovim configuration destination directory
-CONFIG_DIR="$HOME/.config"
-NVIM_DEST="$CONFIG_DIR/nvim"
 
 # =============================
 # FUNCTION DEFINITIONS
@@ -45,11 +42,36 @@ install_packages() {
         sudo pacman -S --noconfirm make
         sudo pacman -S --noconfirm oh-my-zsh
         sudo pacman -S --noconfirm tmux
+        sudo pacman -S --noconfirm xorg-xrdb
         sudo pacman -S --noconfirm fzf
+        sudo pacman -S --noconfirm ttf-nerd-fonts-symbols
+        sudo pacman -S --noconfirm zsh-syntax-highlighting
     else
         echo "This script is intended for Arch Linux. Exiting..."
         exit 1
     fi
+}
+
+# Install yay (AUR helper) if it's not already installed
+install_yay() {
+    if ! command -v yay > /dev/null 2>&1; then
+        echo "yay not found. Installing yay..."
+        cd /tmp || exit 1
+        git clone https://aur.archlinux.org/yay.git
+        cd yay || exit 1
+        makepkg -si --noconfirm
+        cd - || exit 1
+    else
+        echo "yay is already installed."
+    fi
+}
+
+# Install yay packages
+install_yay_packages() {
+    echo "Installing yay packages..."
+    yay -S --noconfirm zsh-autosuggestions
+    yay -S --noconfirm ttf-meslo-nerd-font
+    yay -S --noconfirm nerd-fonts-fira-code
 }
 
 # Function to ensure a directory exists; create it if it doesn't
@@ -88,27 +110,6 @@ create_symlink() {
     ln -s "$SRC" "$DEST"
 }
 
-# Install yay (AUR helper) if it's not already installed
-install_yay() {
-    if ! command -v yay > /dev/null 2>&1; then
-        echo "yay not found. Installing yay..."
-        cd /tmp || exit 1
-        git clone https://aur.archlinux.org/yay.git
-        cd yay || exit 1
-        makepkg -si --noconfirm
-        cd - || exit 1
-    else
-        echo "yay is already installed."
-    fi
-}
-
-# Install Zsh-related packages (syntax highlighting & autosuggestions)
-install_zsh_packages() {
-    echo "Installing zsh-syntax-highlighting via pacman..."
-    sudo pacman -S --noconfirm zsh-syntax-highlighting
-    echo "Installing zsh-autosuggestions via yay..."
-    yay -S --noconfirm zsh-autosuggestions
-}
 
 # Install oh my zsh
 configure_oh_my_zsh() {
@@ -154,11 +155,11 @@ install_packages
 # Install yay (AUR helper) if needed
 install_yay
 
+# Install yay packages
+install_yay_packages
+
 # Install oh my zsh
 configure_oh_my_zsh
-
-# Install zsh config
-install_zsh_packages
 
 # Ensure the CODE_DIR exists
 ensure_dir "$CODE_DIR"
